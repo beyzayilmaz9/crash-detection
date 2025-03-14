@@ -71,6 +71,10 @@ python objectDetection.py --input path_to_video.mp4 --model yolov8n.pt --fov 120
    - **Imminent Risk:** If a vehicle is on a direct collision course with very little time-to-collision (TTC), the system raises an imminent risk alert.
 6. **Visual Alerts:** Displays warnings on the video feed when high-risk scenarios are detected.
 
+![image](https://github.com/user-attachments/assets/90491e84-72e4-43d1-84e4-ebf2a858d04f)
+
+![image](https://github.com/user-attachments/assets/03f0e063-3e16-41ce-a859-4e8835f89e7e)
+
 ---
 
 ## Expected Output
