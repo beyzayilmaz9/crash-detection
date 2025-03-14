@@ -87,6 +87,7 @@ You can add images/screenshots to visualize sample outputs.
 - **Environmental Factors:** Poor lighting or obstructions may affect detection accuracy.
 - **High Processing Demand:** Real-time analysis may require a strong GPU for optimal performance.
 - **Calibration Required:** The system's accuracy depends on correct field of view (FOV) and camera height calibration.
+- **Speed Estimation Adjustments:** The detected speed may vary depending on camera placement and scale factors. If necessary, fine-tune the scale factor in the script to improve accuracy.
 
 ---
 
