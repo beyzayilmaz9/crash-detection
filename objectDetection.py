@@ -78,13 +78,11 @@ class VehicleTracker:
         self.MIN_SPEED_THRESHOLD = 0.2
         self.MIN_FRAMES_STATIONARY = 10
         
-        # MODIFIED: Lowered threshold for active risk detection to make risks appear sooner
         self.RISK_THRESHOLD = 0.2  # Reduced from 0.6 to register risks faster
         
         self.TRACK_LENGTH = 20
         self.MAX_TRACK_LOSS_FRAMES = 5
         
-        # ADDED: New parameters for imminent collision handling
         self.IMMINENT_COLLISION_TTC = 2.0  # Consider collisions imminent below this TTC
         self.imminent_collisions = {}  # Track imminent collisions separately
         
@@ -135,7 +133,6 @@ class VehicleTracker:
         if rel_speed < 0.001:
             return float('inf')
             
-        # IMPROVED: Better detection for vehicles approaching from sides
         # Use projected closest approach distance instead of just current direction
         # Project position forward based on velocity vectors
         closest_approach_dist = self.calculate_closest_approach(dx, dy, rel_vx, rel_vy)
@@ -225,8 +222,10 @@ class VehicleTracker:
                         dy = center_y - prev_y
                         speed_pixels = math.sqrt(dx**2 + dy**2)
                         
-                        # Convert pixel speed to real-world speed (km/h)
-                        real_speed = (speed_pixels * self.scale_factor * self.fps * 3.6)
+                        # Adjusted conversion factor for improved speed estimation
+                        calibrated_scale = self.scale_factor * 1.5  # Adjust multiplier based on testing
+                        real_speed = (speed_pixels * calibrated_scale * self.fps * 3.6)
+
                         
                         # Apply distance correction based on y position
                         y_position_factor = 1.0 + (center_y / frame_height) * 0.5
@@ -288,7 +287,6 @@ class VehicleTracker:
                         }
                     current_imminent_vehicles.add(vehicle_id)
                     
-                    # MODIFIED: Ensure imminent collisions are immediately registered as active risks
                    # Before adding to dangerous situations, check if this is truly a new risk
                     if vehicle_id not in self.active_risks:
                         self.active_risks[vehicle_id] = self.processed_frames / self.fps
@@ -417,7 +415,6 @@ class VehicleTracker:
     
                 cv2.putText(frame, warning, (mid_x - 60, mid_y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
                 cv2.putText(frame, f"Risk: {current_risk_duration:.1f}s", (vehicle_center[0], vehicle_center[1] - 50), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-                cv2.putText(frame, f"Speed: {real_speed:.1f} km/h", (vehicle_center[0], vehicle_center[1] - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
                 if ttc < float('inf'):
                     cv2.putText(frame, f"TTC: {ttc:.1f}s", (vehicle_center[0], vehicle_center[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
     
