@@ -95,13 +95,6 @@ You can add images/screenshots to visualize sample outputs.
 
 ---
 
-## Future Enhancements
-- **Support for real-time video streams**
-- **Integration with ADAS (Advanced Driver Assistance Systems)**
-- **Multi-camera support for improved accuracy**
-- **Fine-tuning model for better vehicle detection**
-
----
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
